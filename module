@@ -1,5 +1,11 @@
 #!/bin/sh
 set -eu
+
+# things which ENEXA is supposed to do
 mkdir -p $ENEXA_WRITEABLE_DIRECTORY
-./example 3
+echo "INSERT DATA { <$ENEXA_MODULE_INSTANCE_IRI> <http://example.org/parameter1> 3 }" \
+    |sparql-update "$ENEXA_META_DATA_ENDPOINT"
+
+# actual example
+./example $(enexa-parameter "http://example.org/parameter1")
 enexa-add-file result.dat
